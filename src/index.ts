@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import authRoutes from './routes/auth';
 import contactsRoutes from './routes/contacts';
 import pricingRoutes from './routes/pricing';
@@ -29,13 +30,34 @@ app.use('/api/pricing', pricingRoutes);
 app.use('/api/projects', projectsRoutes);
 
 // Serve admin panel static files
-const adminPath = path.join(__dirname, '..', 'admin', 'dist');
+const adminPath = path.join(process.cwd(), 'admin', 'dist');
+console.log('Serving admin from:', adminPath);
 app.use('/admin', express.static(adminPath));
 
 // Serve admin panel for all /admin/* routes (SPA fallback)
 app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminPath, 'index.html'));
+  const indexPath = path.join(adminPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    // Fallback for debugging
+    res.status(404).send(`
+      <h1>404 - Admin Panel Not Found</h1>
+      <p>Looking for: ${indexPath}</p>
+      <p>Current Directory: ${process.cwd()}</p>
+      <p>Files in admin/dist: ${JSON.stringify(listDir(adminPath))}</p>
+    `);
+  }
 });
+
+// Helper to list directory safely
+const listDir = (dir: string) => {
+  try {
+    return fs.readdirSync(dir);
+  } catch (e: any) {
+    return `Error: ${e.message}`;
+  }
+};
 
 // Test endpoint for mobile debugging
 app.get('/api/test', (req, res) => {
@@ -51,10 +73,19 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Start server - listen on all network interfaces (0.0.0.0)
-const server = app.listen(Number(PORT), '0.0.0.0', () => {
-  console.log(`Backend server running on:`);
-  console.log(`  - Local:   http://localhost:${PORT}`);
-  console.log(`  - Network: http://192.168.100.11:${PORT}`);
-  console.log(`Admin panel available at http://localhost:${PORT}/admin`);
+// Root route - redirect to admin
+app.get('/', (req, res) => {
+  res.redirect('/admin');
 });
+
+// Start server - listen on all network interfaces (0.0.0.0)
+if (require.main === module) {
+  const server = app.listen(Number(PORT), '0.0.0.0', () => {
+    console.log(`Backend server running on:`);
+    console.log(`  - Local:   http://localhost:${PORT}`);
+    console.log(`  - Network: http://192.168.100.11:${PORT}`);
+    console.log(`Admin panel available at http://localhost:${PORT}/admin`);
+  });
+}
+
+export default app;
