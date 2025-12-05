@@ -29,12 +29,15 @@ app.use('/api/pricing', pricingRoutes);
 app.use('/api/projects', projectsRoutes);
 
 // Serve admin panel static files
-const adminPath = path.join(__dirname, '..', 'admin', 'dist');
+const adminPath = path.join(process.cwd(), 'admin', 'dist');
+console.log('Serving admin from:', adminPath);
 app.use('/admin', express.static(adminPath));
 
 // Serve admin panel for all /admin/* routes (SPA fallback)
 app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(adminPath, 'index.html'));
+  const indexPath = path.join(adminPath, 'index.html');
+  console.log('Serving index.html from:', indexPath);
+  res.sendFile(indexPath);
 });
 
 // Test endpoint for mobile debugging
