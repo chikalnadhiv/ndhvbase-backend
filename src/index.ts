@@ -29,15 +29,12 @@ app.use('/api/pricing', pricingRoutes);
 app.use('/api/projects', projectsRoutes);
 
 // Serve admin panel static files
-const adminPath = path.join(process.cwd(), 'public', 'admin');
-console.log('Serving admin from:', adminPath);
+const adminPath = path.join(__dirname, '..', 'admin', 'dist');
 app.use('/admin', express.static(adminPath));
 
 // Serve admin panel for all /admin/* routes (SPA fallback)
 app.get('/admin/*', (req, res) => {
-  const indexPath = path.join(adminPath, 'index.html');
-  console.log('Serving index.html from:', indexPath);
-  res.sendFile(indexPath);
+  res.sendFile(path.join(adminPath, 'index.html'));
 });
 
 // Test endpoint for mobile debugging
@@ -54,20 +51,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Root route - redirect to admin
-app.get('/', (req, res) => {
-  res.redirect('/admin');
+// Start server - listen on all network interfaces (0.0.0.0)
+const server = app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`Backend server running on:`);
+  console.log(`  - Local:   http://localhost:${PORT}`);
+  console.log(`  - Network: http://192.168.100.11:${PORT}`);
+  console.log(`Admin panel available at http://localhost:${PORT}/admin`);
 });
-
-// Start server - listen on all network interfaces (0.0.0.0)
-// Start server - listen on all network interfaces (0.0.0.0)
-if (require.main === module) {
-  const server = app.listen(Number(PORT), '0.0.0.0', () => {
-    console.log(`Backend server running on:`);
-    console.log(`  - Local:   http://localhost:${PORT}`);
-    console.log(`  - Network: http://192.168.100.11:${PORT}`);
-    console.log(`Admin panel available at http://localhost:${PORT}/admin`);
-  });
-}
-
-export default app;
