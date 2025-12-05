@@ -1,0 +1,4 @@
+{
+  "db:push": "npx drizzle-kit push",
+  "db:studio": "npx drizzle-kit studio"
+}
