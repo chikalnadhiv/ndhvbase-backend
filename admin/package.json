@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "alias": {
+    "buffer": "buffer"
+  },
   "scripts": {
     "start": "parcel index.html -p 3002",
     "build": "parcel build index.html --dist-dir dist --public-url /admin"
@@ -12,6 +15,7 @@
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.555.0",
