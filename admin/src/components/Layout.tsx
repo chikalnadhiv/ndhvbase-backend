@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, DollarSign, LogOut, Settings, Briefcase } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Button } from '../components/ui/button';
+import { API_URL } from '../config';
 
 interface LayoutProps {
   onLogout: () => void;
@@ -13,7 +14,7 @@ export default function Layout({ onLogout }: LayoutProps) {
   const handleLogout = async () => {
     const token = localStorage.getItem('admin_token');
     if (token) {
-      await fetch('http://localhost:3001/api/admin/auth/logout', {
+      await fetch(`${API_URL}/api/admin/auth/logout`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
       });

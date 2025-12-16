@@ -52,9 +52,14 @@ app.get('/health', (req, res) => {
 });
 
 // Start server - listen on all network interfaces (0.0.0.0)
-const server = app.listen(Number(PORT), '0.0.0.0', () => {
-  console.log(`Backend server running on:`);
-  console.log(`  - Local:   http://localhost:${PORT}`);
-  console.log(`  - Network: http://192.168.100.11:${PORT}`);
-  console.log(`Admin panel available at http://localhost:${PORT}/admin`);
-});
+// Start server only if run directly
+if (require.main === module) {
+  const server = app.listen(Number(PORT), '0.0.0.0', () => {
+    console.log(`Backend server running on:`);
+    console.log(`  - Local:   http://localhost:${PORT}`);
+    console.log(`  - Network: http://192.168.100.11:${PORT}`);
+    console.log(`Admin panel available at http://localhost:${PORT}/admin`);
+  });
+}
+
+export default app;

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_URL } from '../config';
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -26,7 +27,7 @@ export default function Settings() {
     const token = localStorage.getItem('admin_token');
 
     try {
-      const response = await fetch('http://localhost:3001/api/admin/auth/credentials', {
+      const response = await fetch(`${API_URL}/api/admin/auth/credentials`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

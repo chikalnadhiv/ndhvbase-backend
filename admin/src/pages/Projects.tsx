@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import { Trash2, Edit, Plus, X, ExternalLink, CloudUpload } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ export default function Projects() {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/projects');
+      const response = await fetch(`${API_URL}/api/projects`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setProjects(data);
@@ -58,7 +59,7 @@ export default function Projects() {
 
     const token = localStorage.getItem('admin_token');
     try {
-      await fetch(`http://localhost:3001/api/projects/${deleteId}`, {
+      await fetch(`${API_URL}/api/projects/${deleteId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -253,7 +254,7 @@ function ProjectForm({ project, onClose }: { project: Project | null; onClose: (
       setIsFetchingImage(true);
       try {
         const token = localStorage.getItem('admin_token');
-        const response = await fetch(`http://localhost:3001/api/projects/metadata?url=${encodeURIComponent(link)}`, {
+        const response = await fetch(`${API_URL}/api/projects/metadata?url=${encodeURIComponent(link)}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -285,8 +286,8 @@ function ProjectForm({ project, onClose }: { project: Project | null; onClose: (
 
     try {
       const url = project
-        ? `http://localhost:3001/api/projects/${project.id}`
-        : 'http://localhost:3001/api/projects';
+        ? `${API_URL}/api/projects/${project.id}`
+        : `${API_URL}/api/projects`;
       const method = project ? 'PUT' : 'POST';
 
       const response = await fetch(url, {

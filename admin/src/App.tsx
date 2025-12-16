@@ -8,6 +8,8 @@ import Projects from './pages/Projects';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
 
+import { API_URL } from './config';
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ function App() {
     const token = localStorage.getItem('admin_token');
     if (token) {
       // Verify token
-      fetch('http://localhost:3001/api/admin/auth/verify', {
+      fetch(`${API_URL}/api/admin/auth/verify`, {
         headers: { 'Authorization': `Bearer ${token}` },
       })
         .then(res => {

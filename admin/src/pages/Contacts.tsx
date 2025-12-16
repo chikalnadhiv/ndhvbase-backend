@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import { Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -38,7 +39,7 @@ export default function Contacts() {
   const fetchContacts = async () => {
     const token = localStorage.getItem('admin_token');
     try {
-      const response = await fetch('http://localhost:3001/api/contacts', {
+      const response = await fetch(`${API_URL}/api/contacts`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -60,7 +61,7 @@ export default function Contacts() {
 
     const token = localStorage.getItem('admin_token');
     try {
-      await fetch(`http://localhost:3001/api/contacts/${deleteId}`, {
+      await fetch(`${API_URL}/api/contacts/${deleteId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

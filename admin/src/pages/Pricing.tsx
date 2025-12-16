@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import { Trash2, Edit, Plus, X } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,7 @@ export default function Pricing() {
 
   const fetchPricing = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/pricing');
+      const response = await fetch(`${API_URL}/api/pricing`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setPricing(data);
@@ -60,7 +61,7 @@ export default function Pricing() {
 
     const token = localStorage.getItem('admin_token');
     try {
-      await fetch(`http://localhost:3001/api/pricing/${deleteId}`, {
+      await fetch(`${API_URL}/api/pricing/${deleteId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -193,8 +194,8 @@ function PricingForm({ plan, onClose }: { plan: PricingPlan | null; onClose: () 
 
     try {
       const url = plan
-        ? `http://localhost:3001/api/pricing/${plan.id}`
-        : 'http://localhost:3001/api/pricing';
+        ? `${API_URL}/api/pricing/${plan.id}`
+        : `${API_URL}/api/pricing`;
       const method = plan ? 'PUT' : 'POST';
 
       const response = await fetch(url, {

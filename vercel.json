@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/src/index.ts"
+    }
+  ],
+  "functions": {
+    "src/index.ts": {
+      "maxDuration": 10
+    }
+  }
+}

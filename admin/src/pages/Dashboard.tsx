@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -15,11 +16,11 @@ export default function Dashboard() {
       const token = localStorage.getItem('admin_token');
       try {
         const [contactsRes, pricingRes, projectsRes] = await Promise.all([
-          fetch('http://localhost:3001/api/contacts', {
+          fetch(`${API_URL}/api/contacts`, {
             headers: { 'Authorization': `Bearer ${token}` },
           }),
-          fetch('http://localhost:3001/api/pricing'),
-          fetch('http://localhost:3001/api/projects'),
+          fetch(`${API_URL}/api/pricing`),
+          fetch(`${API_URL}/api/projects`),
         ]);
 
         const contacts = await contactsRes.json();
