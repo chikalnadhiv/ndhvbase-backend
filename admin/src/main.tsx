@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
+import { Buffer } from 'buffer';
 import './index.css';
+
+// Polyfill Buffer globally
+globalThis.Buffer = globalThis.Buffer || Buffer;
 
 import { ThemeProvider } from "./components/theme-provider"
 import { Toaster } from "./components/ui/sonner"
