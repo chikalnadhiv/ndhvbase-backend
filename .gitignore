@@ -13,7 +13,7 @@ pnpm-debug.log*
 .env.production.local
 
 # Build outputs
-dist/
+public/
 build/
 *.log
 

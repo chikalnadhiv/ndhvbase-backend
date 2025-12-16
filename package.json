@@ -2,12 +2,12 @@
   "name": "ndhvbase-backend",
   "version": "1.0.0",
   "description": "Backend API for ndhvbase admin application",
-  "main": "dist/index.js",
+  "main": "public/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "build:admin": "cd admin && npm install && npm run build",
-    "start": "node dist/index.js",
+    "start": "node public/index.js",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio"
   },
