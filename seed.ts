@@ -1,5 +1,5 @@
 import { db } from './src/db';
-import { pricing, projects } from './src/db/schema';
+import { pricing, projects, socialLinks } from './src/db/schema';
 
 // Seed initial pricing data
 const seedData = async () => {
@@ -73,6 +73,24 @@ const seedData = async () => {
       console.log('✅ Projects data seeded successfully!');
     } else {
       console.log('ℹ️ Projects data already exists, skipping.');
+    }
+
+    // Seed Social Links
+    const socialLinksList = [
+      { name: 'Instagram', icon: 'Instagram', url: 'https://www.instagram.com/chikalarc?igsh=c3NmcWkyc3p3a2lw' },
+      { name: 'Facebook', icon: 'Facebook', url: 'https://www.facebook.com/share/1aWEKdnJrK/' },
+      { name: 'Github', icon: 'Github', url: 'https://github.com/chikalnadhiv' },
+      { name: 'Twitter', icon: 'Twitter', url: 'https://x.com/nadhiv5?t=AnZSOrVsL7gFQcVV6A19tQ&s=35' },
+    ];
+
+    const existingLinks = await db.select().from(socialLinks);
+    if (existingLinks.length === 0) {
+      for (const link of socialLinksList) {
+        await db.insert(socialLinks).values(link);
+      }
+      console.log('✅ Social Links data seeded successfully!');
+    } else {
+      console.log('ℹ️ Social Links data already exists, skipping.');
     }
 
   } catch (error) {

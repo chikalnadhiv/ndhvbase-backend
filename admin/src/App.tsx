@@ -6,7 +6,9 @@ import Contacts from './pages/Contacts';
 import Pricing from './pages/Pricing';
 import Projects from './pages/Projects';
 import Settings from './pages/Settings';
+import SocialLinks from './pages/SocialLinks';
 import Layout from './components/Layout';
+import { Toaster } from 'sonner';
 
 import { API_URL } from './config';
 
@@ -40,7 +42,8 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/admin">
+      <Toaster position="top-right" richColors />
       <Routes>
         <Route path="/login" element={
           isAuthenticated ? <Navigate to="/" /> : <Login onLogin={() => setIsAuthenticated(true)} />
@@ -53,6 +56,7 @@ function App() {
           <Route path="pricing" element={<Pricing />} />
           <Route path="projects" element={<Projects />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="social-links" element={<SocialLinks />} />
         </Route>
       </Routes>
     </BrowserRouter>

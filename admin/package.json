@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "parcel index.html -p 3002",
-    "build": "parcel build index.html --dist-dir dist --public-url /"
+    "build": "parcel build index.html --dist-dir dist --public-url ./"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",

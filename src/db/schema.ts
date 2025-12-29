@@ -35,3 +35,12 @@ export const projects = pgTable('projects', {
   link: text('link'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const socialLinks = pgTable('social_links', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  icon: text('icon').notNull(), // Lucide icon name
+  url: text('url').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});

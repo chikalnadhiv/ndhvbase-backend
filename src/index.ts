@@ -6,6 +6,7 @@ import authRoutes from './routes/auth';
 import contactsRoutes from './routes/contacts';
 import pricingRoutes from './routes/pricing';
 import projectsRoutes from './routes/projects';
+import socialLinksRoutes from './routes/social-links';
 
 // Load environment variables
 dotenv.config();
@@ -27,13 +28,14 @@ app.use('/api/admin/auth', authRoutes);
 app.use('/api/contacts', contactsRoutes);
 app.use('/api/pricing', pricingRoutes);
 app.use('/api/projects', projectsRoutes);
+app.use('/api/social-links', socialLinksRoutes);
 
 // Serve admin panel static files
 const adminPath = path.join(__dirname, '..', 'admin', 'dist');
 app.use('/admin', express.static(adminPath));
 
-// Serve admin panel for all /admin/* routes (SPA fallback)
-app.get('/admin/*', (req, res) => {
+// Serve admin panel for all /admin and /admin/* routes (SPA fallback)
+app.get(['/admin', '/admin/*'], (req, res) => {
   res.sendFile(path.join(adminPath, 'index.html'));
 });
 

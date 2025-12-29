@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, DollarSign, LogOut, Settings, Briefcase } from 'lucide-react';
+import { LayoutDashboard, Users, DollarSign, LogOut, Settings, Briefcase, Share2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Button } from '../components/ui/button';
 import { API_URL } from '../config';
@@ -28,6 +28,7 @@ export default function Layout({ onLogout }: LayoutProps) {
     { path: '/contacts', label: 'Contacts', icon: Users },
     { path: '/pricing', label: 'Pricing', icon: DollarSign },
     { path: '/projects', label: 'Projects', icon: Briefcase },
+    { path: '/social-links', label: 'Social Links', icon: Share2 },
     { path: '/settings', label: 'Settings', icon: Settings },
   ];
 
