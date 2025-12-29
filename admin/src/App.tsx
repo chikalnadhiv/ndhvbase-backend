@@ -41,8 +41,10 @@ function App() {
     return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>Loading...</div>;
   }
 
+  const basename = window.location.pathname.startsWith('/admin') ? '/admin' : '/';
+
   return (
-    <BrowserRouter basename="/admin">
+    <BrowserRouter basename={basename}>
       <Toaster position="top-right" richColors />
       <Routes>
         <Route path="/login" element={
