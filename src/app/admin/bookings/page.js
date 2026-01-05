@@ -1,11 +1,24 @@
 "use client";
 export const dynamic = "force-dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Plus, X, Eye, Phone, Mail, Calendar as CalendarIcon, Package as PackageIcon, CheckCircle, Clock, XCircle, Download, FileText, CheckCircle2, AlertCircle, User, MapPin } from "lucide-react";
 
 export default function BookingsPage() {
+    return (
+        <Suspense fallback={
+            <div className="py-24 flex flex-col items-center gap-4">
+                <div className="w-10 h-10 border-4 border-black/5 border-t-black rounded-full animate-spin"></div>
+                <p className="text-gray-400 font-medium">Loading Bookings...</p>
+            </div>
+        }>
+            <BookingsContent />
+        </Suspense>
+    );
+}
+
+function BookingsContent() {
     const [bookings, setBookings] = useState([]);
     const [packages, setPackages] = useState([]);
     const [loading, setLoading] = useState(true);

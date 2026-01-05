@@ -1,10 +1,22 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { LogOut, X, AlertCircle, Calendar, Package, Layers, FileText, DollarSign, User as UserIcon, ShieldCheck } from "lucide-react";
 
 export default function AdminLayout({ children }) {
+    return (
+        <Suspense fallback={
+            <div className="flex h-[100svh] w-full items-center justify-center bg-[#F7F4EF]">
+                <div className="w-12 h-12 border-4 border-stone-200 border-t-black rounded-full animate-spin"></div>
+            </div>
+        }>
+            <AdminLayoutContent>{children}</AdminLayoutContent>
+        </Suspense>
+    );
+}
+
+function AdminLayoutContent({ children }) {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
