@@ -4,19 +4,7 @@ import { useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { Save, Info, Sparkles, Star, Check, ArrowRight, Loader2, Image as ImageIcon, Plus, X, UploadCloud, Trash2, ArrowUpRight, FolderHeart, ExternalLink, AlertTriangle, AlertCircle, Maximize2, Monitor } from "lucide-react";
 
-export default function AboutPage() {
-    return (
-        <Suspense fallback={
-            <div className="flex items-center justify-center min-h-[400px]">
-                <Loader2 className="w-8 h-8 animate-spin text-stone-300" />
-            </div>
-        }>
-            <AboutManagement />
-        </Suspense>
-    );
-}
-
-function AboutManagement() {
+function AboutManagementContent() {
     const searchParams = useSearchParams();
     const q = searchParams.get('q')?.toLowerCase() || '';
     const [loading, setLoading] = useState(true);
@@ -773,5 +761,13 @@ function AboutManagement() {
                 </div>
             )}
         </div>
+    );
+}
+
+export default function AboutManagement() {
+    return (
+        <Suspense fallback={<div className="p-10 text-center font-bold text-gray-400 animate-pulse">Loading About Management...</div>}>
+            <AboutManagementContent />
+        </Suspense>
     );
 }
