@@ -1,10 +1,22 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Calendar as CalendarIcon, Wallet, Plus, ChevronDown, Check, X, Target, TrendingUp, ArrowUpRight, CheckCircle2, Clock, XCircle, Globe, Package as Box, ChevronLeft, ChevronRight, User as UserIcon } from "lucide-react";
 
 export default function AdminDashboard() {
+    return (
+        <Suspense fallback={
+            <div className="flex h-[400px] w-full items-center justify-center">
+                <div className="w-10 h-10 border-4 border-stone-200 border-t-stone-900 rounded-full animate-spin"></div>
+            </div>
+        }>
+            <DashboardContent />
+        </Suspense>
+    );
+}
+
+function DashboardContent() {
     const searchParams = useSearchParams();
     const q = searchParams.get('q')?.toLowerCase() || '';
     const [showBookingModal, setShowBookingModal] = useState(false);
