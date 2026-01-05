@@ -1,0 +1,16 @@
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// UPDATE item
+export async function PUT(request, { params }) {
+  const { itemId } = await params; // Note: We need to handle how this route is called.
+  // Actually, standard Next.js route for nested dynamic paths is tricky if we want /api/services/[id]/items/[itemId]
+  // Ideally, we can just use /api/service-items/[id] for update/delete to keep it flat and simple.
+  
+  // BUT, since we are constrained to files I create.
+  // Let's create a separate route file for manipulating single items: /api/service-items/[id]/route.js
+  
+  return NextResponse.json({ error: "Use /api/service-items/[id]" }, { status: 404 });
+}

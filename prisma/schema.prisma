@@ -1,0 +1,209 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  name      String?
+  role      String   @default("USER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Package {
+  id          Int           @id @default(autoincrement())
+  name        String
+  price       Float
+  features    String
+  isPopular   Boolean       @default(false)
+  bookingGoal Int           @default(0)
+  revenueGoal Float         @default(0)
+  groupId     Int?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  bookings    Booking[]
+  group       ServiceGroup? @relation(fields: [groupId], references: [id])
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String?
+  content   String
+  image     String?
+  createdAt DateTime @default(now())
+  clientId  Int?
+  rating    Int      @default(5)
+  isPublished Boolean  @default(true)
+  client    Client?  @relation(fields: [clientId], references: [id])
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceGroup {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  bookingGoal Int       @default(0)
+  revenueGoal Float     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  packages    Package[]
+  categories  Service[]
+}
+
+model Service {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  details     String?       @db.Text
+  icon        String
+  groupId     Int?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  group       ServiceGroup? @relation(fields: [groupId], references: [id])
+  items       ServiceItem[]
+}
+
+model ServiceItem {
+  id              Int              @id @default(autoincrement())
+  name            String
+  description     String?
+  price           Float?
+  socialIcon      String?
+  socialLink      String?
+  locationUrl     String?
+  image           String?
+  serviceId       Int
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  service         Service          @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  detailTemplates DetailTemplate[] @relation("ItemDetails")
+}
+
+model DetailTemplate {
+  id        Int           @id @default(autoincrement())
+  name      String
+  content   String        @db.Text
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  items     ServiceItem[] @relation("ItemDetails")
+}
+
+model Client {
+  id             Int             @id @default(autoincrement())
+  username       String?         @unique
+  password       String?
+  name           String
+  phone          String          @unique
+  address        String
+  email          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  bookings       Booking[]
+  documentations Documentation[]
+  testimonials   Testimonial[]
+}
+
+model Booking {
+  id            Int                @id @default(autoincrement())
+  clientName    String
+  clientEmail   String?
+  clientPhone   String?
+  clientAddress String?
+  eventDate     DateTime
+  packageId     Int?
+  status        String             @default("PENDING")
+  totalAmount   Float
+  notes         String?
+  moodboard     String?
+  clientId      Int?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  dpAmount      Float              @default(0)
+  invoiceUrl    String?
+  isPublished   Boolean            @default(false)
+  location      String?
+  client        Client?            @relation(fields: [clientId], references: [id])
+  package       Package?           @relation(fields: [packageId], references: [id])
+  preparation   PreparationStep[]
+  transactions  Transaction[]
+  vendors       VendorAssignment[]
+  items         BookingItem[]
+}
+
+model BookingItem {
+  id              Int      @id @default(autoincrement())
+  bookingId       Int
+  name            String
+  isCustom        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  booking         Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model VendorAssignment {
+  id              Int      @id @default(autoincrement())
+  bookingId       Int
+  category        String
+  vendorName      String
+  packageIncludes String?
+  notes           String?
+  isConfirmed     Boolean  @default(false)
+  price           Float    @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  booking         Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model PreparationStep {
+  id         Int      @id @default(autoincrement())
+  bookingId  Int
+  agenda     String
+  date       DateTime
+  time       String?
+  location   String?
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  pendamping String?
+  booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  type        String
+  category    String
+  amount      Float
+  description String?
+  date        DateTime @default(now())
+  bookingId   Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  booking     Booking? @relation(fields: [bookingId], references: [id])
+}
+
+model Documentation {
+  id          Int      @id @default(autoincrement())
+  title       String
+  coverImage  String
+  orientation String   @default("portrait")
+  images      String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  clientId    Int?
+  client      Client?  @relation(fields: [clientId], references: [id])
+}
