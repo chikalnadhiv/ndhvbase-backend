@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import WindowsDetector from "./WindowsDetector";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,10 @@ export default function RootLayout({ children }) {
             <head>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
             </head>
-            <body className={inter.className} suppressHydrationWarning>{children}</body>
+            <body className={inter.className} suppressHydrationWarning>
+                <WindowsDetector />
+                {children}
+            </body>
         </html>
     );
 }

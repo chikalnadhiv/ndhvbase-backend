@@ -13,6 +13,11 @@ body {
     background: #F7F4EF;
 }
 
+/* Fix for Windows scaling issues: reduce base size to simulate ~80% zoom */
+html.is-windows {
+    font-size: 13px;
+}
+
 @layer utilities {
     .no-scrollbar::-webkit-scrollbar {
         display: none;

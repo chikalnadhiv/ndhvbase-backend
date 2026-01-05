@@ -129,7 +129,7 @@ function DashboardContent() {
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
-    const monthName = now.toLocaleString('default', { month: 'long' });
+    const monthName = now.toLocaleString('id-ID', { month: 'long' });
 
     const fetchAllData = async () => {
         try {
@@ -357,7 +357,7 @@ function DashboardContent() {
     // Calendar View Helpers
     const viewMonth = viewDate.getMonth();
     const viewYear = viewDate.getFullYear();
-    const viewMonthName = viewDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+    const viewMonthName = viewDate.toLocaleString('id-ID', { month: 'long', year: 'numeric' });
     const totalDays = daysInMonth(viewMonth, viewYear);
     const startPadding = startDayOfMonth(viewMonth, viewYear);
 
@@ -488,7 +488,7 @@ function DashboardContent() {
                                     <Wallet size={24} />
                                 </div>
                                 <span className="text-xl md:text-2xl font-black px-6 text-center leading-tight tracking-tight relative z-10">
-                                    Rp {Number(stats.income || 0).toLocaleString()}
+                                    Rp {Number(stats.income || 0).toLocaleString('id-ID')}
                                 </span>
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-30 mt-2 relative z-10">Total Income</span>
                             </div>
@@ -611,7 +611,7 @@ function DashboardContent() {
                                                                             <Target size={11} strokeWidth={2.5} />
                                                                         </button>
                                                                     </div>
-                                                                    <span className="text-[10px] font-bold text-stone-400">Rp {Number(pkg.revenue || 0).toLocaleString()} / Target: {Number(pkg.revenueGoal || 0).toLocaleString()}</span>
+                                                                    <span className="text-[10px] font-bold text-stone-400">Rp {Number(pkg.revenue || 0).toLocaleString('id-ID')} / Target: {Number(pkg.revenueGoal || 0).toLocaleString('id-ID')}</span>
                                                                 </div>
                                                                 <div className="flex flex-col items-end">
                                                                     <div className="flex items-center gap-1.5 font-black text-stone-900 leading-none">
@@ -722,7 +722,7 @@ function DashboardContent() {
                                             style={{ left: `${revenuePercent}%`, transform: 'translateX(-50%)' }}
                                         >
                                             <div className="bg-stone-900 text-white text-[10px] font-black px-3 py-1.5 rounded-xl mb-3 shadow-2xl relative">
-                                                Rp {Number(stats.income || 0).toLocaleString()}
+                                                Rp {Number(stats.income || 0).toLocaleString('id-ID')}
                                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 rotate-45"></div>
                                             </div>
                                             <div className="w-4 h-4 rounded-full bg-white border-[4px] border-stone-900 shadow-xl mx-auto ring-4 ring-stone-900/5"></div>
@@ -731,7 +731,7 @@ function DashboardContent() {
 
                                     <div className="flex justify-between mt-6">
                                         <span className="text-[10px] font-black text-stone-300 uppercase tracking-widest">Base 0</span>
-                                        <span className="text-[10px] font-black text-stone-800 uppercase tracking-widest">Target Rp {Number(targets.revenueGoal || 0).toLocaleString()}</span>
+                                        <span className="text-[10px] font-black text-stone-800 uppercase tracking-widest">Target Rp {Number(targets.revenueGoal || 0).toLocaleString('id-ID')}</span>
                                     </div>
                                 </div>
 
@@ -741,7 +741,7 @@ function DashboardContent() {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] mb-1">Gap to Achieve</p>
-                                        <p className="text-base font-black text-stone-800">Rp {Math.max(0, (Number(targets.revenueGoal || 0) - Number(stats.income || 0))).toLocaleString()}</p>
+                                        <p className="text-base font-black text-stone-800">Rp {Math.max(0, (Number(targets.revenueGoal || 0) - Number(stats.income || 0))).toLocaleString('id-ID')}</p>
                                     </div>
                                 </div>
 
@@ -791,12 +791,12 @@ function DashboardContent() {
                                                                         <Target size={11} strokeWidth={2.5} />
                                                                     </button>
                                                                 </div>
-                                                                <span className="text-[10px] font-bold text-stone-400">Rp {Number(pkg.revenue || 0).toLocaleString()}</span>
+                                                                <span className="text-[10px] font-bold text-stone-400">Rp {Number(pkg.revenue || 0).toLocaleString('id-ID')}</span>
                                                             </div>
                                                             <div className="flex flex-col items-end">
                                                                 <div className="flex items-center gap-1.5 font-black text-stone-900 leading-none">
                                                                     <span className="text-[10px] text-stone-300">Target</span>
-                                                                    <span className="text-[11px]">Rp {Number(pkg.revenueGoal || 0).toLocaleString()}</span>
+                                                                    <span className="text-[11px]">Rp {Number(pkg.revenueGoal || 0).toLocaleString('id-ID')}</span>
                                                                 </div>
                                                                 <span className={`text-[10px] font-black mt-1 ${Number(pkg.revenueProgress || 0) >= 100 ? 'text-green-500' : 'text-stone-400'}`}>{Number(pkg.revenueProgress || 0)}%</span>
                                                             </div>
@@ -822,14 +822,14 @@ function DashboardContent() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex flex-col">
-                                                                    <span className="text-[10px] font-bold text-stone-900">Rp {Number(group.revenue || 0).toLocaleString()}</span>
+                                                                    <span className="text-[10px] font-bold text-stone-900">Rp {Number(group.revenue || 0).toLocaleString('id-ID')}</span>
                                                                     <span className="text-[8px] font-black text-amber-500 uppercase tracking-widest mt-0.5">{group.packageCount || 0} Packages Total</span>
                                                                 </div>
                                                             </div>
                                                             <div className="flex flex-col items-end">
                                                                 <div className="flex items-center gap-1.5 font-black text-stone-900 leading-none">
                                                                     <span className="text-[10px] text-stone-300">Target</span>
-                                                                    <span className="text-[11px]">Rp {Number(group.revenueGoal || 0).toLocaleString()}</span>
+                                                                    <span className="text-[11px]">Rp {Number(group.revenueGoal || 0).toLocaleString('id-ID')}</span>
                                                                 </div>
                                                                 <span className="text-[10px] font-black text-amber-600 mt-1">{Math.min(100, Math.round((Number(group.revenue || 0) / (Number(group.revenueGoal) || 1)) * 100))}%</span>
                                                             </div>
@@ -940,7 +940,7 @@ function DashboardContent() {
                                             <div className="flex items-center gap-2 text-stone-400">
                                                 <CalendarIcon size={12} className="opacity-50" />
                                                 <span className="text-[10px] font-bold uppercase tracking-tighter">
-                                                    {new Date(bk.eventDate).toLocaleDateString(undefined, { day: '2-digit', month: 'short' })}
+                                                    {new Date(bk.eventDate).toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}
                                                 </span>
                                             </div>
                                         </div>
