@@ -963,18 +963,6 @@ export default function MasterItemsPage() {
                             </div>
 
                             <div className="space-y-2">
-                                <CustomSelect
-                                    label="Assign to Group"
-                                    value={categoryFormData.groupId}
-                                    onChange={(val) => setCategoryFormData({ ...categoryFormData, groupId: val })}
-                                    options={groups}
-                                    placeholder="Select a Service Group"
-                                    isOpen={isGroupFormDropdownOpen}
-                                    setIsOpen={setIsGroupFormDropdownOpen}
-                                />
-                            </div>
-
-                            <div className="space-y-2">
                                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
                                     Description (Optional)
                                 </label>
@@ -983,18 +971,6 @@ export default function MasterItemsPage() {
                                     placeholder="Brief description of this category..."
                                     value={categoryFormData.description}
                                     onChange={(e) => setCategoryFormData({ ...categoryFormData, description: e.target.value })}
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
-                                    Category Details (Visible on landing page)
-                                </label>
-                                <textarea
-                                    className="w-full bg-gray-50 border-0 p-4 rounded-2xl focus:ring-2 focus:ring-black outline-none transition-all font-medium h-32 resize-none"
-                                    placeholder="List the key details or inclusions for this category..."
-                                    value={categoryFormData.details}
-                                    onChange={(e) => setCategoryFormData({ ...categoryFormData, details: e.target.value })}
                                 />
                             </div>
 

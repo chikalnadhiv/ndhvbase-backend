@@ -6,10 +6,12 @@ const SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "jenggala-supe
 export async function middleware(request) {
     const { pathname } = request.nextUrl;
 
+    const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+
     // Handle CORS preflight
     if (request.method === "OPTIONS") {
         const response = new NextResponse(null, { status: 204 });
-        response.headers.set("Access-Control-Allow-Origin", "http://localhost:5173");
+        response.headers.set("Access-Control-Allow-Origin", allowedOrigin);
         response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
         response.headers.set("Access-Control-Allow-Credentials", "true");
@@ -19,7 +21,7 @@ export async function middleware(request) {
     const response = await handleMiddleware(request);
 
     // Add CORS headers to all responses
-    response.headers.set("Access-Control-Allow-Origin", "http://localhost:5173");
+    response.headers.set("Access-Control-Allow-Origin", allowedOrigin);
     response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     response.headers.set("Access-Control-Allow-Credentials", "true");
